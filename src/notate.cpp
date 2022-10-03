@@ -283,13 +283,13 @@ int main() {
 		char type;
 		char pos_c;
 		int pos;
-		if (sscanf(item.c_str(), "%c%c%d", &type, &pos_c, &pos) != 2) {
-		    cerr << "Invalid accidental.\n";
+		if (sscanf(item.c_str(), "%c%c%d", &type, &pos_c, &pos) != 3) {
+		    cerr << "Could not read accidental command.\n";
 		    continue;
 		}
 
 		pos *= 7;
-		pos += (pos_c + 5 % 7);
+		pos += ((pos_c - '0' + 5) % 7);
 		const char typeCStr[2] = {type, '\0'};
 		if (!graphAccidental(x, staff_y, pos, "src/eps/" + string(typeCStr) + ".eps", clef)) {
 		    cerr << "Invalid accidental.\n";
