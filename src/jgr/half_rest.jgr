@@ -1,0 +1,7 @@
+newgraph
+xaxis min 0 max 10 nodraw
+yaxis min 0 max 10 nodraw
+
+newline poly pfill 0
+    pts 4.3 5.3  5.7 5.3
+        5.7 5    4.3 5

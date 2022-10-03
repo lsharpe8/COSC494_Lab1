@@ -1,0 +1,6 @@
+treble t2/2 k2s
+qb4 qb4 hr
+hg4 hr
+qd5 qe5 qf5 qg5
+ha5 ha5
+done

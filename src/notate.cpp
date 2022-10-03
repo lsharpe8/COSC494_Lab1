@@ -13,9 +13,10 @@
 #define X_MAX 100
 
 #define CLEF_SPACE 5
+#define TS_SPACE 5
+#define BAR_SPACE 5
 #define QUARTER_SPACE 10
 #define HALF_SPACE 20
-#define TS_SPACE 5
 #define KEY_SPACE 2
 
 #define STANDARD_SIZE_X 10
@@ -196,6 +197,10 @@ int main() {
 
 	    //Extend staff when necessary
 	    if (x >= X_LIMIT) {
+		if (staff_y - STAFF_HEIGHT < (STAFF_HEIGHT / 2.0)) {
+		    cerr << "Graphing more than one page of music at a time is not supported.\n";
+		    return 1;
+		}
 		graphStaff(staff_y);
 		graphMeasureLine(0, staff_y);
 
@@ -342,8 +347,11 @@ int main() {
 		double bar_x;
 		if (x >= X_LIMIT)
 		    bar_x = X_MAX - .1;
-		else
+		else {
 		    bar_x = x - space / 2.0;
+		    x -= space / 2.0;
+		    x += BAR_SPACE;
+		}
 		graphMeasureLine(bar_x, staff_y);
 		beatSum = 0;
 	    }
