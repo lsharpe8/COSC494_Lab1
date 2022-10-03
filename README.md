@@ -28,9 +28,12 @@ and c is replaced by 's' for sharps and 'b' for flats. If the number is 0, c is 
 Numbers less than 0 or greater than 7 are invalid.
 
 To enter a note, enter a command in the format 'ln#' where l is replaced by the first character of the word which describes its
-length and n# is replaced by the note's scientic pitch notation. Wikipedia has a full explanation of this notation, but basically
+length and n# is replaced by the note's scientific pitch notation. Wikipedia has a full explanation of this notation, but basically
 each octave, starting from C, has a number. The octave from Middle C to the B a 7th up from it has the number 4.
 Currently, the only acceptable input for l is 'q' for quarter. 
+
+To enter an accidental before a note, you must enter a separate command before the note in the format 'cn#' where c is replaced by
+the desired accidental in the same way as for key signature and n# is replaced by the note's scientific pitch notation.
 
 To enter a rest, enter a command in the format 'lr' where l is replaced in the same way as a note.
 
