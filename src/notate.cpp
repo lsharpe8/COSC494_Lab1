@@ -77,10 +77,17 @@ bool graphNote(const double &x, const double &y, const int &n_value, const int &
     return true;
 }
 
-void graphAccidental(const double &x, const double &y, const int &value, const string &img, const int &clef) {
+bool graphAccidental(const double &x, const double &y, const int &value, const string &img, const int &clef) {
     int middleValue = getMiddleValue(y, value, clef);
+    if (middleValue == 1000)
+	return false;
+    if ((value > (middleValue + 12)) || (value < (middleValue - 12))) {
+	cerr << "A note requiring more than 4 ledger lines is not supported.\n";
+	return false;
+    }
     int offset = (value - middleValue);
     graphItem(x, y + (offset / 2.0), img);
+    return true;
 }
 
 void graphTimeSignature(const double &x, const double &y, const double &top, const int &bot) { 
@@ -272,6 +279,24 @@ int main() {
 		space = KEY_SPACE * num;
 		if (num > 0)
 		    space += KEY_SPACE;
+	    } else if ((item[0] == 's') || (item[0] == 'b') || (item[0] == 'n')) {
+		char type;
+		char pos_c;
+		int pos;
+		if (sscanf(item.c_str(), "%c%c%d", &type, &pos_c, &pos) != 2) {
+		    cerr << "Invalid accidental.\n";
+		    continue;
+		}
+
+		pos *= 7;
+		pos += (pos_c + 5 % 7);
+		const char typeCStr[2] = {type, '\0'};
+		if (!graphAccidental(x, staff_y, pos, "src/eps/" + string(typeCStr) + ".eps", clef)) {
+		    cerr << "Invalid accidental.\n";
+		    continue;
+		}
+
+		space = KEY_SPACE;
 	    } else if (item == "changeclef") {
 		break;
 	    } else {

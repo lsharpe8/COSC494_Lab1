@@ -16,7 +16,7 @@ void graphItem(const double &x, const double &y, const string &img);
 bool graphNote(const double &x, const double &y, const int &n_value, const int &lengthDivisor, const string &imgPrefix, const int &clef);
 
 //Graphs an accidental at x y given its value (calculated the same as n_value), .eps name, and the current clef.
-void graphAccidental(const double &x, const double &y, const int &value, const string &img, const int &clef);
+bool graphAccidental(const double &x, const double &y, const int &value, const string &img, const int &clef);
 
 //Graphs a time signature at x y given its upper and lower values.
 void graphTimeSignature(const double &x, const double &y, const double &top, const int &bot);
