@@ -10,9 +10,9 @@ name the resulting PDF whatever you replaced foo.bar with.<br>
 
 
 **Valid Commands While Running**<br>
---NOTE: All the commands must be entirely in lowercase.--
+--NOTE: All the commands must be entirely in lowercase.--<br>
 The first thing a user must enter is the title.
-
+<br> <br>
 Then, the user must enter the clef they wish the first staff to have. Currently, the only acceptable clef is 'treble'.
 <br> <br>
 Next, the user must enter the time signature with a command in the format 't#/#' where the #s are replaced by the upper and
@@ -40,16 +40,16 @@ Enter 'done' to finish.
 **Glossary**<br>
 In case you are not familiar with the meaning of these musical terms or use a different meaning than I,
 here is a personal glossary of terms:<br>
-    Accidental - Modifiers for notes that raise or lower the pitch, represented by symbols next to the notes. <br>
-    Bar - See Measure.<br>
+    Accidental - Modifiers for notes that raise or lower the pitch, represented by symbols next to the notes. <br> <br>
+    Bar - See Measure.<br> <br>
     Clef - Dictates which notes the lines on the staff represent, represented by a symbol which is
-	    usually at the left end of the staff.<br>
-    Key signature - The representation of the accidentals which are part of the key, shown at the left end of the staff.<br>
-    Ledger lines - Small, horizontal lines that "extend" the staff temporarily to fit especially high or low notes.<br>
-    Measure - A small section of a song, separated by vertical lines based on the rhythm.<br>
-    Staff - The grouped horizontal lines that all the notes, clefs, etc. are drawn on.<br>
+	    usually at the left end of the staff.<br> <br>
+    Key signature - The representation of the accidentals which are part of the key, shown at the left end of the staff.<br> <br>
+    Ledger lines - Small, horizontal lines that "extend" the staff temporarily to fit especially high or low notes.<br> <br>
+    Measure - A small section of a song, separated by vertical lines based on the rhythm.<br> <br>
+    Staff - The grouped horizontal lines that all the notes, clefs, etc. are drawn on.<br> <br>
     Time signature - Dictates what the length of a beat is and how many beats per measure/bar there are, represented
 			by two numbers, one on top of the other, at the beginning of the staff. The top number is
 			the number of beats per measure, and the bottom number is the length of a beat represented
-			as the divisor of the fraction of a whole note that represents the length.<br>
+			as the divisor of the fraction of a whole note that represents the length.<br> <br>
 
