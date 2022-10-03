@@ -1,6 +1,6 @@
 Test #2
-treble t3/4
-qa4 qb4 sc5 qc5
+treble t1.5/2
+hb4 sc5 qc5
 k3b qe5 qg5 nb5 qb5
 k0 qa3 qb3 qc4
 done
