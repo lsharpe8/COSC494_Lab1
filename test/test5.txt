@@ -1,0 +1,10 @@
+treble t4/4 k4b
+qc5 qb4 qa4 qb4
+qc5 qc5 hc5
+qb4 qb4 hb4
+qc5 qe5 he5
+qc5 qb4 qa4 qb4
+qc5 qc5 qc5 qc5
+qb4 qb4 qc5 qb4
+wa4
+done

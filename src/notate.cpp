@@ -15,9 +15,11 @@
 #define CLEF_SPACE 5
 #define TS_SPACE 5
 #define BAR_SPACE 5
+#define KEY_SPACE 2
+
 #define QUARTER_SPACE 10
 #define HALF_SPACE 20
-#define KEY_SPACE 2
+#define WHOLE_SPACE 40
 
 #define STANDARD_SIZE_X 10
 #define STANDARD_SIZE_Y 10
@@ -220,7 +222,7 @@ int main() {
 		continue;
 	    }
 	    
-	    if ((item[0] == 'q') || (item[0] == 'h')) { //Graph note
+	    if ((item[0] == 'q') || (item[0] == 'h') || (item[0] == 'w')) { //Graph note
 		if (!bpb) {
 		    cerr << "Missing time signature - enter one.\n";
 		    continue;
@@ -239,6 +241,11 @@ int main() {
 			imgPrefix = "src/eps/half_";
 			lengthDivisor = 2;
 			noteSpace = HALF_SPACE;
+			break;
+		    case 'w':
+			imgPrefix = "src/eps/whole_";
+			lengthDivisor = 1;
+			noteSpace = WHOLE_SPACE;
 			break;
 		    //Error checking already done, no need for default
 		}
