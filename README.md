@@ -1,6 +1,10 @@
 # COSC494 Lab1
 
-This program graphs sheet music with Jgraph based on user commands read from the command line.
+This program graphs sheet music with Jgraph based on user commands read from stdin.
+To compile the program and run it with the five test inputs, enter 'make' on the command line. The
+resulting PDFs will be titled test[1-5].txt and will be in the pdf directory.
+To compile and run the program to read from stdin, enter 'make run file=foo.bar' on the command line. It will
+name the resulting PDF whatever you replaced foo.bar with.
 
 In case you are not familiar with the meaning of these musical terms or use a different meaning than I,
 here is a personal glossary of terms:
