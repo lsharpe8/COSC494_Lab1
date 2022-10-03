@@ -1,6 +1,6 @@
 export
 
-all: clean notate test
+all: notate test
 
 notate: include/notate.hpp src/notate.cpp src/eps/* src/jgr/* test/*
 	f=`ls src/jgr/`;\

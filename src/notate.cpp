@@ -10,6 +10,7 @@
 
 #define STAFF_HEIGHT 20
 #define X_LIMIT 95
+#define X_MAX 100
 
 #define CLEF_SPACE 5
 #define QUARTER_SPACE 10
@@ -140,6 +141,11 @@ void graphMeasureLine(const double &x, const double &y) {
     cout << "newline color 0 0 0 pts " << x << " " << y + 1.9 << " " << x << " " << y - 1.9 << endl;
 }
 
+void graphEndBar(const double &x, const double &y) {
+    graphMeasureLine(x - .4, y);
+    cout << "newline poly pfill 0 pts " << x - .2 << " " << y + 1.9 << " " << x << " " << y + 1.9 << " " << x << " " << y - 1.9 << " " << x - .2 << " " << y - 1.9 << endl;
+}
+
 int main() {
     double top = 100.0;
     double staff_y = top;
@@ -177,9 +183,17 @@ int main() {
 	x += CLEF_SPACE;
 
 	while (cin >> item) {
-	    if (item == "done")
+	    if (item == "done") {
+		if (beatSum == 0) {
+		    cout << "newline poly pfill 1 color 1 1 1 pts " << (x - space / 2.0 - .2) << " " << staff_y + 2 << " " << X_MAX << " " << staff_y + 2
+			 << " " << X_MAX << " " << (staff_y - 2) << " " << (x - space / 2.0 - .2) << " " << (staff_y - 2) << endl;
+		    graphEndBar(x - space / 2.0 - .2, staff_y);
+		} else 
+		    graphEndBar(X_MAX, staff_y);
 		return 0;
+	    }
 
+	    //Extend staff when necessary
 	    if (x >= X_LIMIT) {
 		graphStaff(staff_y);
 		graphMeasureLine(0, staff_y);
