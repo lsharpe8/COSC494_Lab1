@@ -6,5 +6,5 @@ notate: include/notate.hpp src/notate.cpp src/eps/* src/jgr/*
 	do j=`echo $$i | sed 's/jgr/eps/'`; ./jgraph src/jgr/$$i > src/eps/$$j ;\
 	done ;\
 	g++ -Iinclude -o notate src/notate.cpp
-	./notate > test.jgr
-	./jgraph test.jgr > test.eps
+	cat test/test.txt | ./notate > test/test.jgr
+	./jgraph test/test.jgr > test/test.eps

@@ -1,0 +1,5 @@
+treble t3/4 k7s
+qa4 qb4 qc5
+k3b qe5 qg5 qb5
+k0 qa3 qb3 qc4
+done

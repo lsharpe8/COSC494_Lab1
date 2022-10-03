@@ -34,9 +34,7 @@ void graphItem(const double &x, const double &y, const string &img) {
 	 << "pts " << x << " " << y << endl;
 }
 
-bool graphNote(const double &x, const double &y, const int &n_value, const int &lengthDivisor, const string &imgPrefix, const int &clef) {
-    int offset, direction;
-    string imgSuffix;
+int getMiddleValue(const double &y, const int &n_value, const int &clef) {
     int middleValue;
 
     switch (clef) {
@@ -46,19 +44,31 @@ bool graphNote(const double &x, const double &y, const int &n_value, const int &
 	    middleValue = 34;
 	    break;
 	default:
-	    cerr << "Invalid clef.\n";
-	    return false;
+	    return 1000;
     }
-    offset = (n_value - middleValue);
+    
+    return middleValue;
+}
+
+bool graphNote(const double &x, const double &y, const int &n_value, const int &lengthDivisor, const string &imgPrefix, const int &clef) {
+    string imgSuffix;
+
+    int middleValue = getMiddleValue(y, n_value, clef);
+    if (middleValue == 1000) {
+	cerr << "Invalid clef.\n";
+	return false;
+    }
+    int offset = (n_value - middleValue);
     if ((n_value > (middleValue + 12)) || (n_value < (middleValue - 12))) {
 	cerr << "A note requiring more than 4 ledger lines is not supported.\n";
 	return false;
     }
+
     imgSuffix = ((n_value >= middleValue) && (lengthDivisor != 1)) ? "_down.eps" : ".eps";
     graphItem(x, y + (offset / 2.0), imgPrefix + imgSuffix);
 
     //Graph ledger lines
-    direction = (n_value < middleValue) ? 1 : -1;
+    int direction = (n_value < middleValue) ? 1 : -1;
     if (offset & 0x1) {
 	offset += direction;
     }
@@ -67,16 +77,19 @@ bool graphNote(const double &x, const double &y, const int &n_value, const int &
     return true;
 }
 
+void graphAccidental(const double &x, const double &y, const int &value, const string &img, const int &clef) {
+    int middleValue = getMiddleValue(y, value, clef);
+    int offset = (value - middleValue);
+    graphItem(x, y + (offset / 2.0), img);
+}
+
 void graphTimeSignature(const double &x, const double &y, const double &top, const int &bot) { 
     cout << "newstring vjc hjc x " << x << " y " << y + 1 << " : " << top << "\nfontsize " << TS_FONT_SIZE << endl
 	 << "newstring vjc hjc x " << x << " y " << y - 1 << " : " << bot << "\nfontsize " << TS_FONT_SIZE << endl;
 }
 
-bool graphKeySignature(const double &x, const double &y, const int &num, const char &type, const int &clef) { 
-    if (type == 'n')
-	return true;
-    
-    if ((type != 's') && (type != 'b'))
+bool graphKeySignature(const double &x, const double &y, const int &num, const char &type, const char &positionType, const int &clef) { 
+    if ((type != 's') && (type != 'b') && (type != 'n'))
 	return false;
 
     int temp_y;
@@ -94,14 +107,17 @@ bool graphKeySignature(const double &x, const double &y, const int &num, const c
     }
 
     int start, direction;
-    if (type == 's') {
+    if (positionType == 's') {
 	start = 0;
 	direction = 1;
     } else {
 	start = 6;
 	direction = -1;
+    }
+
+    if (type == 'b') {
+	keys[0] -= 3.5;
 	keys[2] -= 3.5;
-	keys[6] -= 3.5;
     }
     
     const char typeCStr[2] = {type, '\0'};
@@ -202,7 +218,6 @@ int main() {
 		space = QUARTER_SPACE;
 
 		beatSum += beats;
-		cerr << beatSum << endl;
 	    } else if (item[0] == 't') {
 		if (beatSum != 0) {
 		    cerr << "Cannot change time signature in the middle of a measure.\n";
@@ -221,11 +236,16 @@ int main() {
 		    continue;
 		}
 
-		//Graph key signature transition lines, if necessary
+		//Graph key signature transition lines and naturalize previous key
 		if (x > (CLEF_SPACE * 2 + TS_SPACE * 2)) {
 		    x -= (space / 2.0);
 		    graphMeasureLine(x + .5, staff_y);
 		    x += KEY_SPACE + .5;
+		    
+		    graphKeySignature(x, staff_y, num, 'n', type, clef);
+		    x += KEY_SPACE * num;
+		    if (num > 0)
+			x += KEY_SPACE;
 		}
 
 		if ((item.length() == 2) && (item[1] == '0')) {
@@ -235,7 +255,7 @@ int main() {
 		    num = item[1] - '0';
 		    type = item[2];
 
-		    if (!graphKeySignature(x, staff_y, num, type, clef)) {
+		    if (!graphKeySignature(x, staff_y, num, type, type, clef)) {
 			cerr << "Invalid key signature.\n";
 			continue;
 		    }
