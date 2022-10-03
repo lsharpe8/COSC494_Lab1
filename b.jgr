@@ -3,7 +3,7 @@ xaxis min 0 max 10 nodraw
 yaxis min 0 max 10 nodraw
 
 newline linethickness 2 color 0 0 0 
-    pts 4.7 4.25  4.7 5.75
+    pts 4.7 4.65  4.7 6.15
 
 newline bezier linethickness 3 color 0 0 0
-    pts 4.7 4.25  4.85 4.4  5.15 4.5  5.3 4.95  5.15 4.9  4.78 4.8  4.7 4.75
+    pts 4.7 4.65  4.85 4.8  5.15 4.9  5.3 5.35  5.15 5.4  4.78 5.2  4.7 5.15

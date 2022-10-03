@@ -59,9 +59,9 @@ bool graphNote(const double &x, const double &y, const int &n_value, const int &
 
     //Graph ledger lines
     direction = (n_value < middleValue) ? 1 : -1;
-    if (((offset & 0x1) && (direction == -1)) || (!(offset & 0x1) && (direction == 1))) {
-    } else
+    if (offset & 0x1) {
 	offset += direction;
+    }
     for (double i = y + (offset / 2.0);(i < (y - 2)) || (i > (y + 2));i += direction)
 	cout << "newline color 0 0 0 pts " << x - 1 << " " << i << " " << x + 1 << " " << i << endl;
     return true;
@@ -100,7 +100,8 @@ bool graphKeySignature(const double &x, const double &y, const int &num, const c
     } else {
 	start = 6;
 	direction = -1;
-	keys[3] -= 3.5;
+	keys[2] -= 3.5;
+	keys[6] -= 3.5;
     }
     
     const char typeCStr[2] = {type, '\0'};
@@ -131,11 +132,15 @@ int main() {
     map<string, int> clefs = {{"treble", 0}};
     string str;
     string item;
+
     double space = 0;
-    double x = 5;
+    double x = CLEF_SPACE;
+
     double bpb = 0;
     int beatUnit = 0;
     double beatSum = 0;
+    int num = 0;
+    char type = 'n';
 
     while (cin >> str) {
 	map<string, int>::iterator clefItr = clefs.find(str);
@@ -199,6 +204,11 @@ int main() {
 		beatSum += beats;
 		cerr << beatSum << endl;
 	    } else if (item[0] == 't') {
+		if (beatSum != 0) {
+		    cerr << "Cannot change time signature in the middle of a measure.\n";
+		    continue;
+		}
+
 		if ((sscanf(item.c_str(), "t%lf/%d", &bpb, &beatUnit) < 2) || (bpb < 1) || (beatUnit < 1)) {
 		    cerr << "Invalid time signature.\n";
 		    continue;
@@ -206,8 +216,18 @@ int main() {
 		graphTimeSignature(x, staff_y, bpb, beatUnit);
 		space = TS_SPACE;
 	    } else if (item[0] == 'k') {
-		int num;
-		char type;
+		if (beatSum != 0) {
+		    cerr << "Cannot change key signature in the middle of a measure.\n";
+		    continue;
+		}
+
+		//Graph key signature transition lines, if necessary
+		if (x > (CLEF_SPACE * 2 + TS_SPACE * 2)) {
+		    x -= (space / 2.0);
+		    graphMeasureLine(x + .5, staff_y);
+		    x += KEY_SPACE + .5;
+		}
+
 		if ((item.length() == 2) && (item[1] == '0')) {
 		    num = 0;
 		    type = 'n';
@@ -225,6 +245,8 @@ int main() {
 		}
 		    
 		space = KEY_SPACE * num;
+		if (num > 0)
+		    space += KEY_SPACE;
 	    } else if (item == "changeclef") {
 		break;
 	    } else {
@@ -234,6 +256,7 @@ int main() {
 
 	    x += space;
 
+	    //Put bar at the end of each measure
 	    if (beatSum == bpb) {
 		graphMeasureLine(x - (space / 2.0), staff_y);
 		beatSum = 0;
