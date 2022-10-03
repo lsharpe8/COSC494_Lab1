@@ -14,10 +14,12 @@
 #define CLEF_SPACE 5
 #define QUARTER_SPACE 10
 #define TS_SPACE 5
+#define KEY_SPACE 2
 
 #define STANDARD_SIZE_X 10
 #define STANDARD_SIZE_Y 10
 #define TS_FONT_SIZE 22
+#define KEY_FONT_SIZE 20
 
 using namespace std;
 
@@ -65,9 +67,49 @@ bool graphNote(const double &x, const double &y, const int &n_value, const int &
     return true;
 }
 
-void graphTimeSignature(double &x, const double &y, const double &top, const int &bot) { 
+void graphTimeSignature(const double &x, const double &y, const double &top, const int &bot) { 
     cout << "newstring vjc hjc x " << x << " y " << y + 1 << " : " << top << "\nfontsize " << TS_FONT_SIZE << endl
 	 << "newstring vjc hjc x " << x << " y " << y - 1 << " : " << bot << "\nfontsize " << TS_FONT_SIZE << endl;
+}
+
+bool graphKeySignature(const double &x, const double &y, const int &num, const char &type, const int &clef) { 
+    if (type == 'n')
+	return true;
+    
+    if ((type != 's') && (type != 'b'))
+	return false;
+
+    int temp_y;
+    double keys[7] = {2, .5, 2.5, 1, -.5, 1.5, 0}; //Positions of sharps relative to middle of treble clef in order
+    switch (clef) {
+	case 0:
+	    temp_y = y;
+	    break;
+	case 1:
+	    temp_y = y - 2;
+	    break;
+	default:
+	    cerr << "Invalid clef.\n";
+	    return false;
+    }
+
+    int start, direction;
+    if (type == 's') {
+	start = 0;
+	direction = 1;
+    } else {
+	start = 6;
+	direction = -1;
+	keys[3] -= 3.5;
+    }
+    
+    const char typeCStr[2] = {type, '\0'};
+
+    for (int i = start, j = 0;j < num;i += direction, j++) {
+	graphItem(x + j * KEY_SPACE, keys[i] + temp_y, "src/eps/" + string(typeCStr) + ".eps");
+    }
+
+    return true;
 }
 
 void graphMeasureLine(const double &x, const double &y) {
@@ -105,6 +147,7 @@ int main() {
 	int clef = clefItr->second;
 	graphItem(x, staff_y, "src/eps/" + clefItr->first + ".eps");
 	x += CLEF_SPACE;
+
 	while (cin >> item) {
 	    if (item == "done")
 		return 0;
@@ -162,6 +205,26 @@ int main() {
 		}
 		graphTimeSignature(x, staff_y, bpb, beatUnit);
 		space = TS_SPACE;
+	    } else if (item[0] == 'k') {
+		int num;
+		char type;
+		if ((item.length() == 2) && (item[1] == '0')) {
+		    num = 0;
+		    type = 'n';
+		} else if (item.length() == 3) {
+		    num = item[1] - '0';
+		    type = item[2];
+
+		    if (!graphKeySignature(x, staff_y, num, type, clef)) {
+			cerr << "Invalid key signature.\n";
+			continue;
+		    }
+		} else {
+		    cerr << "Invalid key signature.\n";
+		    continue;
+		}
+		    
+		space = KEY_SPACE * num;
 	    } else if (item == "changeclef") {
 		break;
 	    } else {

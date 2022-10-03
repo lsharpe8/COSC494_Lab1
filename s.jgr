@@ -1,0 +1,13 @@
+newgraph
+xaxis min 0 max 10 nodraw
+yaxis min 0 max 10 nodraw
+
+newline linethickness 2 color 0 0 0
+    pts 4.7 3.5  4.7 6.3
+copycurve 
+    pts 5.3 3.7  5.3 6.5
+
+newline linethickness 6 color 0 0 0
+    pts 4.5 5.6  5.5 5.6
+copycurve
+    pts 4.5 4.4  5.5 4.4
