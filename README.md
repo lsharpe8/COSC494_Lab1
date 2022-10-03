@@ -10,7 +10,7 @@ name the resulting PDF whatever you replaced foo.bar with.<br>
 
 
 **Valid Commands While Running**<br>
---NOTE: All the commands must be entirely in lowercase.--<br>
+--All the commands must be entirely in lowercase.--<br> <br>
 The first thing a user must enter is the title.
 <br> <br>
 Then, the user must enter the clef they wish the first staff to have. Currently, the only acceptable clef is 'treble'.
@@ -39,7 +39,7 @@ Enter 'done' to finish.
 
 **Glossary**<br>
 In case you are not familiar with the meaning of these musical terms or use a different meaning than I,
-here is a personal glossary of terms:<br>
+here is a personal glossary of terms:<br> <br>
     Accidental - Modifiers for notes that raise or lower the pitch, represented by symbols next to the notes. <br> <br>
     Bar - See Measure.<br> <br>
     Clef - Dictates which notes the lines on the staff represent, represented by a symbol which is
