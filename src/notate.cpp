@@ -176,11 +176,16 @@ int main() {
 	    if (x >= X_LIMIT) {
 		graphStaff(staff_y);
 		graphMeasureLine(0, staff_y);
+
 		x = CLEF_SPACE;
 		graphItem(x, staff_y, "src/eps/" + clefItr->first + ".eps");
 		x += CLEF_SPACE;
-		graphTimeSignature(x, staff_y, bpb, beatUnit);
-		x += TS_SPACE;
+
+		graphKeySignature(x, staff_y, num, type, type, clef);
+		x += KEY_SPACE * num;
+		if (num > 0) {
+		    x += KEY_SPACE;
+		}
 	    }
 
 	    //Item format examples: qc4 = middle c for a quarter note, qr = quarter rest, t4/4 = 4/4 time signature marking
