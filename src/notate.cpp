@@ -14,6 +14,7 @@
 
 #define CLEF_SPACE 5
 #define QUARTER_SPACE 10
+#define HALF_SPACE 20
 #define TS_SPACE 5
 #define KEY_SPACE 2
 
@@ -209,42 +210,58 @@ int main() {
 		}
 	    }
 
-	    //Item format examples: qc4 = middle c for a quarter note, qr = quarter rest, t4/4 = 4/4 time signature marking
 	    if (item.length() < 2) {
 		cerr << "Invalid command.\n";
 		continue;
 	    }
 	    
-	    if (item[0] == 'q') {
+	    if ((item[0] == 'q') || (item[0] == 'h')) { //Graph note
 		if (!bpb) {
 		    cerr << "Missing time signature - enter one.\n";
 		    continue;
 		}
 
-		double beats = beatUnit / 4.0;
+		string imgPrefix;
+		int lengthDivisor;
+		int noteSpace;
+		switch (item[0]) {
+		    case 'q':
+			imgPrefix = "src/eps/quarter_";
+			lengthDivisor = 4;
+			noteSpace = QUARTER_SPACE;
+			break;
+		    case 'h':
+			imgPrefix = "src/eps/half_";
+			lengthDivisor = 2;
+			noteSpace = HALF_SPACE;
+			break;
+		    //Error checking already done, no need for default
+		}
+
+		double beats = beatUnit / (double) lengthDivisor;
 
 		if ((beats + beatSum) > bpb) {
-		    cerr << "A quarter note/rest is too long for this measure.\n";
+		    cerr << "Specified note/rest is too long for this measure.\n";
 		    continue;
 		}
 
 		if (item[1] == 'r')
-		    graphItem(x, staff_y, "src/eps/quarter_rest.eps");
+		    graphItem(x, staff_y, imgPrefix + "rest.eps");
 		else {
 		    if ((item[1] < 'a') || (item[1] > 'g') || (item.length() < 3)) {
-			cerr << "Invalid quarter note.\n";
+			cerr << "Invalid note.\n";
 			return 1;
 		    }
 		    int note = (((item[1] - 'a') + 5) % 7) + (item[2] - '0') * 7;
-		    if (!graphNote(x, staff_y, note, 4, "src/eps/quarter_note", clef)) {
-			cerr << "Invalid quarter note.\n";
+		    if (!graphNote(x, staff_y, note, lengthDivisor, imgPrefix + "note", clef)) {
+			cerr << "Invalid note.\n";
 			return 1;
 		    }
 		}
-		space = QUARTER_SPACE;
+		space = noteSpace;
 
 		beatSum += beats;
-	    } else if (item[0] == 't') {
+	    } else if (item[0] == 't') { //Graph time signature
 		if (beatSum != 0) {
 		    cerr << "Cannot change time signature in the middle of a measure.\n";
 		    continue;
@@ -322,7 +339,12 @@ int main() {
 
 	    //Put bar at the end of each measure
 	    if (beatSum == bpb) {
-		graphMeasureLine(x - (space / 2.0), staff_y);
+		double bar_x;
+		if (x >= X_LIMIT)
+		    bar_x = X_MAX - .1;
+		else
+		    bar_x = x - space / 2.0;
+		graphMeasureLine(bar_x, staff_y);
 		beatSum = 0;
 	    }
 	}

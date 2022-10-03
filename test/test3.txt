@@ -1,0 +1,6 @@
+treble t4/4
+qc4 qc4 qg4 qg4
+qa4 qa4 hg4
+qf4 qf4 qe4 qe4
+qd4 qd4 hc4
+done
