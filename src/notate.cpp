@@ -162,6 +162,12 @@ int main() {
     
     graphMeasureLine(0, staff_y);
 
+    //Graph title
+    string title;
+    cerr << "Enter a title:\n";
+    getline(cin, title);
+    cout << "newstring hjc vjc x 50 y " << (top - STAFF_HEIGHT / 2.0) << " fontsize 26 : " << title << endl;
+
     map<string, int> clefs = {{"treble", 0}};
     string str;
     string item;
