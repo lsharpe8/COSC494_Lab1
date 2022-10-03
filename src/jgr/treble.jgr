@@ -1,0 +1,20 @@
+newgraph
+xaxis min 0 max 100 size 1 nodraw
+yaxis min 0 max 100 size 2 nodraw
+
+newline color 0 0 0 linethickness 4
+    pts 42.5 35
+    pts 42.5 45
+    pts 57 45
+    pts 57 30
+    pts 35 30
+    pts 35 45
+    pts 55 75
+    pts 50 85
+    pts 45 75
+    pts 55 15
+    pts 50 12.5
+    pts 47.5 12.5
+    pts 45 15
+    pts 43 17
+    pts 45 19

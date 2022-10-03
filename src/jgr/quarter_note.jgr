@@ -1,0 +1,9 @@
+newgraph
+xaxis min 0 max 10 nodraw
+yaxis min 0 max 10 nodraw
+
+newcurve marktype ellipse marksize 1.5 1 cfill 0 0 0
+    pts 5 5
+
+newline linethickness 2 color 0 0 0
+    pts 5.75 5  5.75 8.5
