@@ -11,7 +11,7 @@ name the resulting PDF whatever you replaced foo.bar with.<br>
 
 **Valid Commands While Running**<br>
 --All the commands must be entirely in lowercase.--<br> <br>
-The first thing a user must enter is the title.
+The first thing a user must enter is the title. It takes the first line as the title.
 <br> <br>
 Then, the user must enter the clef they wish the first staff to have. Currently, the only acceptable clef is 'treble'.
 <br> <br>
