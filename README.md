@@ -1,6 +1,6 @@
 # COSC494 Lab1
 
-This program graphs sheet music with Jgraph based on user commands read from stdin.
+This program graphs sheet music with Jgraph, created by Dr. James S. Plank (https://web.eecs.utk.edu/~jplank/plank/jgraph/jgraph.html), based on user commands read from stdin.
 
 **Compiling & Running**<br>
 To compile the program and run it with the five test inputs, enter 'make' on the command line. The
